@@ -2,6 +2,7 @@ using GQL.Workshop.App.Data;
 using GQL.Workshop.App.Filters;
 using GQL.Workshop.App.Mutations;
 using GQL.Workshop.App.Queries;
+using GQL.Workshop.App.Subscriptions;
 
 namespace GQL.Workshop.App;
 
@@ -16,7 +17,8 @@ public class Startup
     {
         services
             .AddSingleton(new BooksDb())
-            .AddSingleton(new AuthorsDb());
+            .AddSingleton(new AuthorsDb())
+            .AddInMemorySubscriptions();
 
         services
             .AddGraphQLServer()
@@ -28,11 +30,14 @@ public class Startup
                 .AddTypeExtension<AuthorExtensions>()
             .AddMutationType(d => d.Name(AppObjectTypes.Mutation))
                 .AddTypeExtension<BookMutations>()
+            .AddSubscriptionType(d => d.Name(AppObjectTypes.Subscription))
+                .AddTypeExtension<BookSubscriptions>()
             .AddErrorFilter(_ => new AppErrorFilter());
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env) => app
         .UseRouting()
+        .UseWebSockets()
         .UseEndpoints(endpoints =>
         {
             endpoints.MapGraphQL();

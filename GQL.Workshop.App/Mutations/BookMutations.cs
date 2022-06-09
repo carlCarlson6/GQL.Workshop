@@ -1,26 +1,41 @@
 using GQL.Workshop.App.Data;
+using GQL.Workshop.App.Subscriptions;
+using HotChocolate.Subscriptions;
 
 namespace GQL.Workshop.App.Mutations;
 
 [ExtendObjectType(AppObjectTypes.Mutation)]
 public class BookMutations
 {
+    private readonly ITopicEventSender _sender;
+    private readonly BooksDb _booksDb;
+    private readonly AuthorsDb _authorsDb;
+
+    public BookMutations(ITopicEventSender sender, BooksDb booksDb, AuthorsDb authorsDb)
+    {
+        _sender = sender;
+        _booksDb = booksDb;
+        _authorsDb = authorsDb;
+    }
+
     [Error(typeof(AuthorNotFound))]
     [Error(typeof(DuplicatedBook))]
     //[UseMutationConvention]
-    public Task<Book> AddBook([Service] BooksDb db, [Service] AuthorsDb authorsDb,  AddBookInput input)
+    public async Task<Book> AddBook(AddBookInput input)
     {
-        if (authorsDb.Get(input.AuthorId) is null)
+        if (_authorsDb.Get(input.AuthorId) is null)
             throw new AuthorNotFound(input.AuthorId);
 
-        if (db.Query(book => book.Title == input.Title).Any())
+        if (_booksDb.Query(book => book.Title == input.Title).Any())
             throw new DuplicatedBook(input.Title);
         
         var book = new Book(Guid.NewGuid(), input.Title, DateTime.UtcNow, input.AuthorId);
 
-        db.Add(book);
+        _booksDb.Add(book);
 
-        return Task.FromResult(book);
+        await _sender.SendAsync(nameof(BookSubscriptions.BookAdded), book);
+        
+        return book;
     }
 }
 
