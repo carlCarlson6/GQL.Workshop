@@ -1,0 +1,42 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  book(bookId: UUID!): Book
+  books: [Book!]!
+  authors: [Author!]!
+}
+
+type Mutation {
+  addBook(input: AddBookInput!): Book!
+}
+
+type AuthorNotFound {
+  message: String!
+  errorCode: String!
+}
+
+input AddBookInput {
+  title: String!
+  authorId: UUID!
+}
+
+type Author {
+  id: UUID!
+  name: String!
+  books: [Book!]!
+}
+
+scalar UUID
+
+type Book {
+  id: UUID!
+  title: String!
+  published: DateTime!
+  author: Author!
+}
+
+"The `DateTime` scalar represents an ISO-8601 compliant date time type."
+scalar DateTime

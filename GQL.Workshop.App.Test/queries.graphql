@@ -1,0 +1,5 @@
+query allBooks {
+    books {
+        title
+    }
+}

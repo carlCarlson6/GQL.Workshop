@@ -1,0 +1,39 @@
+﻿{
+  "Data": {
+    "Books": [
+      {
+        "Title": "Is graphql better than rest?"
+      },
+      {
+        "Title": "The succss of Colba"
+      }
+    ]
+  },
+  "DataInfo": {
+    "Books": [
+      {
+        "Name": "Book",
+        "Value": "0dacb47e-2e37-459b-bc25-b9ab58bf89ee"
+      },
+      {
+        "Name": "Book",
+        "Value": "951c4b62-d33e-4687-bff4-397816c0860d"
+      }
+    ],
+    "EntityIds": [
+      {
+        "Name": "Book",
+        "Value": "0dacb47e-2e37-459b-bc25-b9ab58bf89ee"
+      },
+      {
+        "Name": "Book",
+        "Value": "951c4b62-d33e-4687-bff4-397816c0860d"
+      }
+    ],
+    "Version": 1
+  },
+  "DataFactory": {},
+  "Errors": [],
+  "Extensions": {},
+  "ContextData": {}
+}
