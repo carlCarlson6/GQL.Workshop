@@ -1,4 +1,4 @@
-```
+```csharp
 using GQL.Workshop.App.Data;
 
 namespace GQL.Workshop.App.Subscriptions;
@@ -11,7 +11,7 @@ public class BookSubscriptions
     public Book BookAdded([EventMessage] Book book) => book;
 }
 ```
-```
+```csharp
 public class BookMutations
 {
     private readonly ITopicEventSender _sender;
@@ -46,7 +46,7 @@ public class BookMutations
     }
 }
 ```
-```
+```csharp
 public class AppObjectTypes
 {
     public const string Query = nameof(Query);
@@ -54,7 +54,7 @@ public class AppObjectTypes
     public const string Subscription = nameof(Subscription);
 }
 ```
-```
+```csharp
 public class Startup
 {    
     private readonly IConfiguration _configuration;

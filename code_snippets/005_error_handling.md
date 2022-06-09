@@ -1,4 +1,4 @@
-```
+```csharp
 namespace GQL.Workshop.App;
 
 public abstract class AppError : Exception
@@ -9,7 +9,7 @@ public abstract class AppError : Exception
 }
 ```
 
-```
+```csharp
 namespace GQL.Workshop.App.Filters;
 
 public class AppErrorFilter : IErrorFilter
@@ -24,10 +24,10 @@ public class AppErrorFilter : IErrorFilter
 ```
 
 on Startup.cs
-```
+```csharp
 public void ConfigureServices(IServiceCollection services) 
 {
-    ...
+    ....
 
     services
         .AddGraphQLServer()
@@ -44,7 +44,7 @@ public void ConfigureServices(IServiceCollection services)
 
 ---
 
-```
+```csharp
 using GQL.Workshop.App.Data;
 
 namespace GQL.Workshop.App.Mutations;
@@ -89,10 +89,10 @@ public record AddBookInput(string Title, Guid AuthorId);
 ```
 
 on Startup.cs
-```
+```csharp
 public void ConfigureServices(IServiceCollection services) 
 {
-    ...
+    ....
 
     services
         .AddGraphQLServer()

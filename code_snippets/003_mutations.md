@@ -1,5 +1,5 @@
 Mutations/Mutations.cs
-```
+```csharp
 using GQL.Workshop.App.Data;
 
 namespace GQL.Workshop.App.Mutations;
@@ -22,7 +22,7 @@ public record AddBookInput(string Title, Guid AuthorId);
 ```
 
 Startup.cs
-```
+```csharp
 public void ConfigureServices(IServiceCollection services) 
 {
     ...
@@ -35,6 +35,6 @@ public void ConfigureServices(IServiceCollection services)
 ```
 
 Execute
-```
+```console
 dotnet graphql update
 ```

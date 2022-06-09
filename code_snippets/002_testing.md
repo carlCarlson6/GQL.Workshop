@@ -26,7 +26,7 @@ dotnet graphql init https://localhost:7131/graphql/ -n GqlClient -p ./GQL.Worksh
 ```
 
 create your first queries
-```
+```graphql
 query allBooks {
     books {
         title
@@ -36,7 +36,7 @@ query allBooks {
 build the project
 
 BaseApiTest.cs
-```
+```csharp
 using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore;
@@ -88,7 +88,7 @@ public static class TestingExtensions
 ```
 
 GetAllBooksTest.cs
-```
+```csharp
 using System.Threading.Tasks;
 using Snapshooter.Xunit;
 using FluentAssertions;
@@ -101,13 +101,8 @@ public class GetAllBooksTest : BaseApiTest
     [Fact]
     public async Task GetAllBooks()
     {
-        // Given
         var client = GivenTestHost().GetGqlClient();
-
-        // When
         var result = await client.AllBooks.ExecuteAsync();
-
-        // Then
         result.Should().MatchSnapshot();
     }
 }

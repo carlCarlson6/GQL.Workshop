@@ -1,12 +1,12 @@
 split queries and mutations in different files
-```
+```csharp
 public class AppObjectTypes
 {
     public const string Query = "Query";
     public const string Mutation = "Mutation";
 }
 ```
-```
+```csharp
 using GQL.Workshop.App.Data;
 
 namespace GQL.Workshop.App.Queries;
@@ -21,7 +21,7 @@ public class AuthorQueries
     public Task<IEnumerable<Author>> GetAuthors() => Task.FromResult(_authorsDb.Get());
 }
 ```
-```
+```csharp
 using GQL.Workshop.App.Data;
 
 namespace GQL.Workshop.App.Queries;
@@ -40,7 +40,7 @@ public class BookQueries
     }
 }
 ```
-```
+```csharp
 using GQL.Workshop.App.Data;
 
 namespace GQL.Workshop.App.Mutations;
@@ -64,7 +64,7 @@ public record AddBookInput(string Title, Guid AuthorId);
 ```
 
 on Startup.cs
-```
+```csharp
 public void ConfigureServices(IServiceCollection services) 
 {
     services
@@ -83,7 +83,7 @@ public void ConfigureServices(IServiceCollection services)
 
 ---
 
-```
+```csharp
 public record Book(
     Guid Id, 
     string Title, 
@@ -91,7 +91,7 @@ public record Book(
     [property: GraphQLIgnore] 
     Guid AuthorId);
 ```
-```
+```csharp
 using GQL.Workshop.App.Data;
 
 namespace GQL.Workshop.App.Queries;
@@ -114,7 +114,7 @@ public class BookExtensions
 }
 ```
 
-```
+```csharp
 using GQL.Workshop.App.Data;
 
 namespace GQL.Workshop.App.Queries;
@@ -135,7 +135,7 @@ public class AuthorExtensions
 ```
 
 on Startup.cs
-```
+```csharp
 public void ConfigureServices(IServiceCollection services) 
 {
     ...

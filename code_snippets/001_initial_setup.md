@@ -1,14 +1,14 @@
 # initial setup
 
 packages
-```
+```csharp
 HotChocolate.AspNetCore 12.10.0
 GraphQL.Server.Ui.Voyager 6.1.0
 GraphQL.Server.Ui.Playground 6.1.0
 ```
 
 Program.cs
-```
+```csharp
 using GQL.Workshop.App;
 
 Host.CreateDefaultBuilder(args)
@@ -19,7 +19,7 @@ Host.CreateDefaultBuilder(args)
 ```
 
 Statup.cs
-```
+```csharp
 using GQL.Workshop.App.Data;
 
 namespace GQL.Workshop.App;
@@ -54,7 +54,7 @@ public class Startup
 ```
 
 Data/Book.cs
-```
+```csharp
 namespace GQL.Workshop.App.Data;
 
 public record Book(Guid Id, string Title, DateTime Published, Guid AuthorId);
@@ -85,7 +85,7 @@ public class BooksDb
 ```
 
 Data/Author.cs
-```
+```csharp
 namespace GQL.Workshop.App.Data;
 
 public record Author(Guid Id, string Name);
@@ -116,7 +116,7 @@ public class AuthorsDb
 ```
 
 Queries/Queries.cs
-```
+```csharp
 using GQL.Workshop.App.Data;
 
 namespace GQL.Workshop.App.Queries;
