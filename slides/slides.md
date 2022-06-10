@@ -40,7 +40,7 @@ backgroundImage: url('https://marp.app/assets/hero-background.svg')
 
 | concept        | rest       | gql           |
 |----------------|------------|---------------|
-| available data | api defined | defined by api |
+| available data | api defined | api defined    |
 | returned data  | api defined | client defined |
 | type system    | no         | yes           |
 
@@ -49,87 +49,14 @@ backgroundImage: url('https://marp.app/assets/hero-background.svg')
 
 | concept        | rest        | gql                  |
 |----------------|-------------|----------------------|
-| excute logic   | controllers | resolvers            |
+| excute logic*  | controllers | resolvers            |
 | transport      | http        | http, sockects, grcp | 
 | web sockets    | -           | subscriptions        |
 
 ---
 ### basics of gql
 
-```
-schema {
-  query: Query
-  mutation: Mutation
-}
-```
-```
-scalars, type, input, union, enums
-```
-
----
-```
-type Query {
-  me: User
-  one(id: ID!): User
-  all: [User]
-}
-
-type Mutation {
-  addUser(userName: String!): User!
-}
-
-type User {
-  id: ID
-  name: String
-}
-```
-
-----
-```
-{
-  human(id: "1000") {
-    name
-    height(unit: FOOT)
-  }
-}
-```
-```
-{
-  "data": {
-    "human": {
-      "name": "Luke Skywalker",
-      "height": 5.6430448
-    }
-  }
-}
-```
-
----
-```
-{
-  empireHero: hero(episode: EMPIRE) {
-    name
-  }
-  jediHero: hero(episode: JEDI) {
-    name
-  }
-}
-```
-```
-{
-  "data": {
-    "empireHero": {
-      "name": "Luke Skywalker"
-    },
-    "jediHero": {
-      "name": "R2-D2"
-    }
-  }
-}
-```
-
----
-# WIP
+[cheatsheet 📋](https://devhints.io/graphql)
 
 ---
 ## chilicream and hist toolset
