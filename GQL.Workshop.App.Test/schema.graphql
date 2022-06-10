@@ -1,27 +1,65 @@
 ﻿schema {
   query: Query
   mutation: Mutation
+  subscription: Subscription
 }
 
 type Query {
   book(bookId: UUID!): Book
   books: [Book!]!
   authors: [Author!]!
+  publication(publicationId: UUID!): Publication
+  publications: [Publication!]!
 }
 
 type Mutation {
-  addBook(input: AddBookInput!): Book!
+  addBook(input: AddBookInput!): AddBookPayload!
+  addPublication(input: AddPublicationInput!): AddPublicationPayload!
 }
 
-type AuthorNotFound {
+type Subscription {
+  bookAdded: Book!
+}
+
+type Magazine {
+  id: UUID!
+  title: String!
+  published: DateTime!
+  authorIds: [UUID!]!
+}
+
+type Book {
+  id: UUID!
+  title: String!
+  published: DateTime!
+  author: Author!
+}
+
+type AuthorNotFound implements Error {
   message: String!
   errorCode: String!
+}
+
+type DuplicatedBook implements Error {
+  message: String!
+  errorCode: String!
+}
+
+interface Error {
+  message: String!
+}
+
+input AddPublicationInput {
+  bookInput: AddBookInput
+  magazineInput: AddMagazineInput
 }
 
 input AddBookInput {
   title: String!
   authorId: UUID!
 }
+
+union Publication = Magazine | Book
 
 type Author {
   id: UUID!
@@ -31,12 +69,24 @@ type Author {
 
 scalar UUID
 
-type Book {
-  id: UUID!
-  title: String!
-  published: DateTime!
-  author: Author!
-}
-
 "The `DateTime` scalar represents an ISO-8601 compliant date time type."
 scalar DateTime
+
+input AddMagazineInput {
+  title: String!
+  authorIds: [UUID!]!
+}
+
+union AddBookError = AuthorNotFound | DuplicatedBook
+
+type AddBookPayload {
+  book: Book
+  errors: [AddBookError!]
+}
+
+type AddPublicationPayload {
+  publication: Publication
+}
+
+"The `@oneOf` directive is used within the type system definition language\n to indicate:\n\n - an Input Object is a Oneof Input Object, or\n - an Object Type's Field is a Oneof Field."
+directive @oneOf on INPUT_OBJECT

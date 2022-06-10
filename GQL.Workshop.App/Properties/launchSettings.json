@@ -11,7 +11,7 @@
     "GQL.Workshop.App": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "applicationUrl": "https://localhost:7131;http://localhost:5189",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

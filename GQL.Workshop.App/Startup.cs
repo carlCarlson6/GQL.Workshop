@@ -18,21 +18,27 @@ public class Startup
         services
             .AddSingleton(new BooksDb())
             .AddSingleton(new AuthorsDb())
+            .AddSingleton(new MagazinesDb())
             .AddInMemorySubscriptions();
 
         services
             .AddGraphQLServer()
             .AddMutationConventions(applyToAllMutations: true)
+            .AddType<Magazine>()
+            .AddType<Book>()
             .AddQueryType(d => d.Name(AppObjectTypes.Query))
                 .AddTypeExtension<BookQueries>()
                 .AddTypeExtension<BookExtensions>()
                 .AddTypeExtension<AuthorQueries>()
                 .AddTypeExtension<AuthorExtensions>()
+                .AddTypeExtension<PublicationQueries>()
             .AddMutationType(d => d.Name(AppObjectTypes.Mutation))
                 .AddTypeExtension<BookMutations>()
+            .AddTypeExtension<PublicationMutation>()
             .AddSubscriptionType(d => d.Name(AppObjectTypes.Subscription))
                 .AddTypeExtension<BookSubscriptions>()
-            .AddErrorFilter(_ => new AppErrorFilter());
+            .AddErrorFilter(_ => new AppErrorFilter())
+            .ModifyOptions(o => o.EnableOneOf = true);
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env) => app
