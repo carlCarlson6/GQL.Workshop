@@ -1,17 +1,14 @@
 using GQL.Workshop.App.Data;
+using GQL.Workshop.App.DataLoaders;
 
 namespace GQL.Workshop.App.Queries;
 
 [ExtendObjectType(typeof(Author))]
 public class AuthorExtensions
 {
-    private readonly BooksDb _booksDb;
+    private readonly BooksByAuthorGroupDataLoader _dataLoader;
 
-    public AuthorExtensions(BooksDb booksDb) => _booksDb = booksDb;
+    public AuthorExtensions(BooksByAuthorGroupDataLoader dataLoader) => _dataLoader = dataLoader;
 
-    public Task<IEnumerable<Book>> GetBooks([Parent] Author author)
-    {
-        var books = _booksDb.Query(book => book.AuthorId == author.Id);
-        return Task.FromResult(books);
-    }
+    public async Task<IEnumerable<Book>> GetBooks([Parent] Author author) => await _dataLoader.LoadAsync(author.Id);
 }

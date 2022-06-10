@@ -1,20 +1,14 @@
 using GQL.Workshop.App.Data;
+using GQL.Workshop.App.DataLoaders;
 
 namespace GQL.Workshop.App.Queries;
 
 [ExtendObjectType(typeof(Book))]
 public class BookExtensions
 {
-    private readonly AuthorsDb _authorsDb;
+    private readonly AuthorBatchDataLoader _authorBatchDataLoader;
 
-    public BookExtensions(AuthorsDb authorsDb) => _authorsDb = authorsDb;
+    public BookExtensions(AuthorBatchDataLoader authorBatchDataLoader) => _authorBatchDataLoader = authorBatchDataLoader;
 
-    public Task<Author> GetAuthor([Parent] Book book)
-    {
-        var author = _authorsDb.Get(book.AuthorId);
-        if (author is null)
-            throw new Exception($"author not found for given book: {book}");
-        
-        return Task.FromResult(author);
-    }
+    public Task<Author> GetAuthor([Parent] Book book) => _authorBatchDataLoader.LoadAsync(book.AuthorId);
 }

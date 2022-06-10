@@ -1,4 +1,5 @@
 using GQL.Workshop.App.Data;
+using GQL.Workshop.App.DataLoaders;
 using GQL.Workshop.App.Filters;
 using GQL.Workshop.App.Mutations;
 using GQL.Workshop.App.Queries;
@@ -23,6 +24,8 @@ public class Startup
 
         services
             .AddGraphQLServer()
+            .AddDataLoader<AuthorBatchDataLoader>()
+            .AddDataLoader<BooksByAuthorGroupDataLoader>()
             .AddMutationConventions(applyToAllMutations: true)
             .AddType<Magazine>()
             .AddType<Book>()
@@ -32,6 +35,7 @@ public class Startup
                 .AddTypeExtension<AuthorQueries>()
                 .AddTypeExtension<AuthorExtensions>()
                 .AddTypeExtension<PublicationQueries>()
+                .AddTypeExtension<MagazineExtensions>()
             .AddMutationType(d => d.Name(AppObjectTypes.Mutation))
                 .AddTypeExtension<BookMutations>()
             .AddTypeExtension<PublicationMutation>()

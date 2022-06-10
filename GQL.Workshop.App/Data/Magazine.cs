@@ -1,6 +1,11 @@
 namespace GQL.Workshop.App.Data;
 
-public record Magazine(Guid Id, string Title, DateTime Published, IEnumerable<Guid> AuthorIds) : IPublication;
+public record Magazine(
+    Guid Id, 
+    string Title, 
+    DateTime Published, 
+    [property: GraphQLIgnore]
+    IEnumerable<Guid> AuthorIds) : IPublication;
 
 public class MagazinesDb : Db<Magazine> 
 {
